@@ -2978,7 +2978,7 @@
         },
         "border-radius": {
           "none": {
-            "value": 0,
+            "value": "{base.dimension.0}",
             "type": "number"
           },
           "4xs": {
