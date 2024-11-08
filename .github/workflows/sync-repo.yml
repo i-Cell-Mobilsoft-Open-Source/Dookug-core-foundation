@@ -10,14 +10,14 @@ on:
 
 env:
     GIT_PAT: ${{ secrets.GIT_PAT }}
-# https://github.com/i-Cell-Mobilsoft-Open-Source/ids-core-foundation
+
 jobs:
   sync-repo:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: [ids-core-web]
-        # , core-android, core-ios
+        repo: [ids-core-web, ids-core-android, ids-core-ios]
+
     name: Sync ${{ matrix.repo }} Repository 
 
     steps:
@@ -26,15 +26,14 @@ jobs:
         with:
           repository: i-Cell-Mobilsoft-Open-Source/ids-core-foundation
           ref: main
-          fetch-depth: 0  # Get the full history
+          fetch-depth: 0
 
       - name: Set up Git authentication for target repository
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "icellmobilsoft-robot"
+          git config --global user.email "68945943+icellmobilsoft-robot@users.noreply.github.com"
           git clone https://x-access-token:$GIT_PAT@github.com/i-Cell-Mobilsoft-Open-Source/${{ matrix.repo }}.git
 
-      # Step 3: Merge changes from core-foundation/main into target repository main
       - name: Merge core-foundation tokens into target main
         run: |
           cd ${{ matrix.repo }}
@@ -68,12 +67,4 @@ jobs:
 
           # Clean up the temporary branch
           git branch -d temp-merge
-
-      - name: Remove if sync-repos.yml exists
-        run: |
-          cd core-web
-          if [ -f .github/workflows/sync-repos.yml ]; then
-            git rm --cached .github/workflows/sync-repos.yml
-            git commit -m "Remove sync-repos.yml from tracked files" || echo "No changes to commit"
-          fi
         
