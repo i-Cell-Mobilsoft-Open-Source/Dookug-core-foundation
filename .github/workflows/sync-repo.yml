@@ -56,7 +56,7 @@ jobs:
           git add tokens
 
           # Commit the changes
-          git commit -m "Merged tokens directory from core-foundation into core-web"
+          git commit -m "Merged tokens directory from core-foundation into ${{ matrix.repo }}"
 
           # Checkout main branch and merge the temporary branch
           git checkout main
