@@ -9,7 +9,7 @@ on:
       - '!.github/workflows/**' 
 
 env:
-    GIT_PAT: ${{ secrets.GIT_PAT }}
+    GIT_PAT: ${{ secrets.ICMS_ROBOT_PAT }}
 
 jobs:
   sync-repo:
